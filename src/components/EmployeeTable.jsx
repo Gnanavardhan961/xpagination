@@ -22,7 +22,6 @@ const EmployeeTable = () => {
         setError(err);
       }
     };
-
     fetchData();
   }, []);
 
@@ -33,11 +32,11 @@ const EmployeeTable = () => {
   const currentRecords = employees.slice(indexOfFirstRecord, indexOfLastRecord);
 
   const handlePrev = () => {
-    if (currentPage > 1) setCurrentPage(currentPage - 1);
+    if (currentPage > 1) setCurrentPage((prev) => prev - 1);
   };
 
   const handleNext = () => {
-    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+    if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
   };
 
   return (
@@ -76,13 +75,23 @@ const EmployeeTable = () => {
               gap: "10px",
             }}
           >
-            <button onClick={handlePrev} disabled={currentPage === 1}>
+            <button
+              onClick={handlePrev}
+              disabled={currentPage === 1}
+              data-cy="prev-button"
+            >
               Previous
             </button>
+
             <span>
               Page {currentPage} of {totalPages}
             </span>
-            <button onClick={handleNext} disabled={currentPage === totalPages}>
+
+            <button
+              onClick={handleNext}
+              disabled={currentPage === totalPages || employees.length === 0}
+              data-cy="next-button"
+            >
               Next
             </button>
           </div>
